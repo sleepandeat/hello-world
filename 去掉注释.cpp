@@ -1,0 +1,96 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include<conio.h>
+int main()
+{
+    int i,j,k,a=0,a1=0,b=0,h=0;
+    char name1[50]={"\0"},name2[50]={"\0"},all[256]={"\0"},c,*d,*e,*f; 
+    FILE *p1,*p2;
+    printf("输入路径："); 
+    scanf("%s",name1);
+    if((p1=fopen(name1,"r+"))==NULL)
+    {
+        printf("文件打开失败！");
+        getch();exit(0);                          
+    }
+    printf("输入目标文件路径：");
+    scanf("%s",name2);
+    if((p2=fopen(name2,"w"))==NULL)
+    {
+        printf("文件打开失败！");
+        getch();exit(0);                          
+    }
+        while(1)
+         {
+             strcpy(all,"\0");
+             fgets(all,256,p1);
+             a=strlen(all);
+             if(a==0)
+                 a1++;
+             else
+                 a1=0;
+                  if(a1==3)
+                    break;
+                d=strstr(all,"//");
+                e=strstr(all,"/*");
+                f=strstr(all,"*/");
+                if(e!=NULL)
+                {
+                  if(f!=NULL)
+                     h=3;
+                  else
+                     h=2;
+                }
+                if(d==NULL&&e==NULL&&h==0)
+                {
+                   for(j=0;j<256;j++)
+                   {
+                       c=all[j];
+                       if(all[j]!='\0')                 
+                           fputc(c,p2);
+                       else
+                         break;               
+                   }
+                }
+                else
+                if(d!=NULL||(e!=NULL&&h==3))
+                {
+                    for(j=0;j<256;j++)
+                    {
+                        c=all[j];
+                         if(all[j]=='/'&&(all[j+1]=='/'||all[j+1]=='*'))
+                                 break;
+                         else                 
+                              fputc(c,p2);
+                     }
+                     h=0;
+                 }
+                else
+                if(f!=NULL&&h==2)
+                {
+                    for(j=0;j<256;j++)
+                    {
+                        c=all[j];
+                        if(b==0)
+                        {        
+                             if(all[j-2]=='*'&&all[j-1]=='/')
+                                  b=1;
+                             else
+                                  continue;
+                         }
+                         if(b==1)
+                         {                
+                             fputc(c,p2);
+                             if(all[j]=='\0')
+                                 break;
+                         }
+                     }
+                     b=0;h=0;       
+                }
+         }
+    fclose(p1);
+    fclose(p2);
+    printf("完成！");
+    getch();
+}

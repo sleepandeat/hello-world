@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h> 
+#include<string.h>
+#include<conio.h>
+int main()
+{
+    int i,j,k,l=0,o=0;
+    char n[20],a[20],b[20],c[20];
+    printf("ÊäÈëÒ»´®Êı×Ö£º");
+    gets(n);
+    for(i=0;i<strlen(n);i++)
+    a[i]=n[i]; 
+    for(i=0;i<strlen(n);i++)
+    for(j=0;j<strlen(n)-i;j++)
+             if(n[j]<n[j+1])
+    {
+                   k=n[j];n[j]=n[j+1];n[j+1]=k;            
+    } 
+    for(i=strlen(n);i>=0;i--)
+              if(a[i]==n[strlen(n)-1])
+    { 
+              if(i>strlen(n)-4)
+                               continue;
+              else
+              if(i<=strlen(n)-4)
+              {
+               k=i;
+               for(j=0;j<strlen(n)-i;j++)
+               {    
+                    b[j]=a[k];
+                    c[j]=a[k];
+                    k++;
+               }
+               for(j=0;j<i;j++)
+               {  
+                  printf("%c",a[j]);
+               }
+                    break; 
+               }       
+    }      
+    for(i=0;i<strlen(n);i++)
+    for(j=0;j<strlen(n)-i;j++)
+               if(b[j]<b[j+1])
+    {
+               k=b[j];b[j]=b[j+1];b[j+1]=k;            
+    }  
+       k=strlen(b)-4;
+    for(i=0;i<=k;i++)
+    for(j=0;j<strlen(b);j++)
+                if(b[i]==c[j])
+    {
+                printf("%c",c[j]);
+                c[j]='a';
+                break;    
+    }
+    printf("\n");
+    for(i=0;i<strlen(b);i++)
+           if(c[i]>='0'&&c[i]<='9')
+                  printf("%c",c[i]);
+getch();
+    } 
